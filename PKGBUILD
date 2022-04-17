@@ -164,14 +164,22 @@ build() {
 	# https://github.com/cyrusimap/cyrus-imapd/issues/2629
 	export LDFLAGS="${LDFLAGS/,--as-needed}"
 
+	# sahil
+	# sed -i 's/(uint8_t) 1;/(uint8_t) 0;/' addons/chan_mobile.c
+
 	./configure \
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		--localstatedir=/var \
 		--sbindir=/usr/bin \
-		--with-imap=system
+		--with-imap=system \
+		--with-bluetooth 
+
+
 	make menuselect.makeopts
 	./menuselect/menuselect --disable BUILD_NATIVE
+
+	make menuconfig
 	make
 }
 
